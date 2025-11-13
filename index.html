@@ -3,51 +3,529 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>박진서 포트폴리오</title>
+    <title>박진서 Parkjinseo - 시각디자인 포트폴리오</title>
     <style>
+        /* ===== 기본 스타일 ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            /* 클래식 블루 컬러 팔레트 */
+            --primary-blue: #1565C0;
+            --primary-blue-light: #1976D2;
+            --accent-blue: #42A5F5;
+            --light-blue: #E3F2FD;
+            --dark-text: #212121;
+            --gray-text: #757575;
+            --white: #FFFFFF;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ===== 네비게이션 바 ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-blue);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* 미니멀 서틀 인터랙션 - 네비게이션 */
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        /* ===== 히어로 섹션 (매거진 스타일) ===== */
+        .hero {
             min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 8rem 4rem 4rem;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+            position: relative;
+        }
+
+        /* 매거진 스타일 타이포그래피 */
+        .hero-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-label {
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+            letter-spacing: 3px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--gray-text);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero-intro {
+            font-size: 1.1rem;
+            color: var(--dark-text);
+            line-height: 1.8;
+            max-width: 500px;
+            padding-left: 2rem;
+            border-left: 4px solid var(--accent-blue);
+        }
+
+        /* 비대칭 이미지 레이아웃 */
+        .hero-visual {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
 
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 60px 80px;
-            max-width: 800px;
+        .hero-image-wrapper {
+            position: relative;
             width: 100%;
-            animation: fadeIn 0.8s ease-in;
+            max-width: 500px;
         }
 
-        .header-section {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            margin-bottom: 30px;
+        .hero-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-blue);
+            z-index: 0;
+            opacity: 0.3;
         }
 
-        .profile-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
+        .hero-image {
+            position: relative;
+            width: 100%;
+            height: 500px;
             object-fit: cover;
-            border: 5px solid #f7fafc;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            flex-shrink: 0;
+            z-index: 1;
+            transition: transform 0.3s ease;
         }
 
+        /* 미니멀 서틀 인터랙션 */
+        .hero-image:hover {
+            transform: translate(-5px, -5px);
+        }
+
+        /* ===== About Me 섹션 (매거진 레이아웃) ===== */
+        .about {
+            padding: 6rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-image {
+            position: sticky;
+            top: 100px;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 2px;
+            box-shadow: 0 10px 40px rgba(21, 101, 192, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .about-image img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 50px rgba(21, 101, 192, 0.2);
+        }
+
+        .about-content h2 {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--dark-text);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== Skills 섹션 (비대칭 그리드) ===== */
+        .skills {
+            padding: 6rem 4rem;
+            background: var(--light-blue);
+        }
+
+        .skills h2 {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background: var(--white);
+            padding: 2rem;
+            border-left: 4px solid var(--accent-blue);
+            transition: all 0.3s ease;
+        }
+
+        /* 미니멀 서틀 인터랙션 */
+        .skill-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(21, 101, 192, 0.1);
+            border-left-color: var(--primary-blue);
+        }
+
+        .skill-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-card ul {
+            list-style: none;
+            color: var(--dark-text);
+        }
+
+        .skill-card li {
+            padding: 0.4rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .skill-card li::before {
+            content: '▪';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+        }
+
+        /* ===== Projects 섹션 (매거진 레이아웃) ===== */
+        .projects {
+            padding: 6rem 4rem;
+        }
+
+        .projects h2 {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .project-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 6rem;
+            align-items: center;
+        }
+
+        /* 비대칭 효과를 위한 교차 배치 */
+        .project-item:nth-child(even) {
+            grid-template-columns: 1fr 1fr;
+            direction: rtl;
+        }
+
+        .project-item:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .project-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-info {
+            padding: 2rem;
+        }
+
+        .project-number {
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-info h3 {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .project-info p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--dark-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.5rem 1rem;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: var(--accent-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* ===== Contact 섹션 ===== */
+        .contact {
+            padding: 6rem 4rem;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            text-decoration: none;
+            border: 2px solid var(--white);
+            border-radius: 2px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        /* 미니멀 서틀 인터랙션 */
+        .contact-link:hover {
+            background: var(--white);
+            color: var(--primary-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            padding: 2rem;
+            text-align: center;
+            background: var(--dark-text);
+            color: var(--white);
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--light-blue);
+        }
+
+        /* ===== 반응형 디자인 ===== */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 6rem 2rem 3rem;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .about {
+                grid-template-columns: 1fr;
+                padding: 4rem 2rem;
+            }
+
+            .about-image {
+                position: relative;
+                top: 0;
+            }
+
+            .project-item,
+            .project-item:nth-child(even) {
+                grid-template-columns: 1fr;
+                direction: ltr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-intro {
+                padding-left: 1rem;
+            }
+
+            .about-content h2,
+            .skills h2,
+            .projects h2,
+            .contact h2 {
+                font-size: 2rem;
+            }
+
+            .skills,
+            .projects,
+            .contact {
+                padding: 4rem 2rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-info h3 {
+                font-size: 1.5rem;
+            }
+
+            .hero-image,
+            .about-image img,
+            .project-image img {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: center;
+            }
+        }
+
+        /* ===== 스크롤 스무스 효과 ===== */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* ===== 로딩 애니메이션 ===== */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -59,64 +537,263 @@
             }
         }
 
-        .text-content h1 {
-            font-size: 3.5rem;
-            color: #2d3748;
-            margin-bottom: 0;
-            font-weight: 700;
-            letter-spacing: -1px;
-        }
-
-        p {
-            font-size: 1.3rem;
-            color: #718096;
-            line-height: 1.8;
-            font-weight: 300;
-        }
-
-        .divider {
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            margin: 25px 0;
-            border-radius: 2px;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 40px 30px;
-            }
-
-            .header-section {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .profile-image {
-                width: 150px;
-                height: 150px;
-            }
-
-            .text-content h1 {
-                font-size: 2.5rem;
-            }
-
-            p {
-                font-size: 1.1rem;
-            }
+        section {
+            animation: fadeIn 0.8s ease-out;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header-section">
-            <img src="images/profile.jpg" alt="박진서 프로필 사진" class="profile-image">
-            <div class="text-content">
-                <h1>박진서</h1>
+    <!-- 네비게이션 -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <div class="hero-label">Visual Designer</div>
+            <h1>박진서<br>Parkjinseo</h1>
+            <div class="hero-subtitle">시각디자인 전공</div>
+            <p class="hero-intro">
+                정확한 레이아웃과 시각적 흐름을 만드는 편집디자인에 열정을 가진 디자이너입니다.
+            </p>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-image-wrapper">
+                <img src="https://via.placeholder.com/500x500/1565C0/FFFFFF?text=Parkjinseo" alt="박진서" class="hero-image">
             </div>
         </div>
-        <div class="divider"></div>
-        <p>안녕하세요</p>
-    </div>
+    </section>
+
+    <!-- About Me 섹션 -->
+    <section class="about" id="about">
+        <div class="about-image">
+            <img src="https://via.placeholder.com/400x400/42A5F5/FFFFFF?text=About+Me" alt="프로필 사진">
+        </div>
+        <div class="about-content">
+            <h2>About Me</h2>
+            <p>
+                안녕하세요, 시각디자인을 전공한 박진서입니다. 편집디자인을 중심으로 브랜딩, 타이포그래피, 레이아웃 디자인에 깊은 관심을 가지고 있습니다.
+            </p>
+            <p>
+                정보를 명확하고 아름답게 전달하는 것이 디자이너의 역할이라고 믿으며, 사용자 경험을 최우선으로 생각합니다. 각 프로젝트마다 독창적인 시각적 언어를 만들어내는 것을 목표로 합니다.
+            </p>
+            <p>
+                끊임없이 학습하고 새로운 디자인 트렌드를 탐구하며, 클라이언트와의 소통을 통해 최상의 결과물을 만들어내기 위해 노력합니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- Skills 섹션 -->
+    <section class="skills" id="skills">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>그래픽 디자인</h3>
+                <ul>
+                    <li>Adobe Photoshop</li>
+                    <li>Adobe Illustrator</li>
+                    <li>Adobe InDesign</li>
+                    <li>Figma</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>편집 디자인</h3>
+                <ul>
+                    <li>레이아웃 구성</li>
+                    <li>타이포그래피</li>
+                    <li>출판물 디자인</li>
+                    <li>북 디자인</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>브랜딩</h3>
+                <ul>
+                    <li>로고 디자인</li>
+                    <li>아이덴티티 시스템</li>
+                    <li>패키지 디자인</li>
+                    <li>브랜드 가이드</li>
+                </ul>
+            </div>
+            <div class="skill-card">
+                <h3>디지털 디자인</h3>
+                <ul>
+                    <li>UI/UX 디자인</li>
+                    <li>웹 디자인</li>
+                    <li>모바일 디자인</li>
+                    <li>프로토타이핑</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects 섹션 -->
+    <section class="projects" id="projects">
+        <h2>Projects</h2>
+        
+        <div class="project-item">
+            <div class="project-image">
+                <img src="https://via.placeholder.com/600x400/1565C0/FFFFFF?text=Magazine+Design" alt="프로젝트 1">
+            </div>
+            <div class="project-info">
+                <div class="project-number">PROJECT 01</div>
+                <h3>라이프스타일 매거진 디자인</h3>
+                <p>
+                    현대적인 감각의 라이프스타일 매거진 편집 디자인 프로젝트입니다. 독창적인 레이아웃과 타이포그래피를 통해 브랜드의 정체성을 효과적으로 전달했습니다.
+                </p>
+                <div class="project-tags">
+                    <span class="tag">Editorial Design</span>
+                    <span class="tag">Typography</span>
+                    <span class="tag">Layout</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-image">
+                <img src="https://via.placeholder.com/600x400/1976D2/FFFFFF?text=Brand+Identity" alt="프로젝트 2">
+            </div>
+            <div class="project-info">
+                <div class="project-number">PROJECT 02</div>
+                <h3>카페 브랜드 아이덴티티</h3>
+                <p>
+                    신규 카페 브랜드의 전체 아이덴티티 시스템을 개발했습니다. 로고부터 메뉴판, 패키지, 사이니지까지 일관된 브랜드 경험을 제공합니다.
+                </p>
+                <div class="project-tags">
+                    <span class="tag">Branding</span>
+                    <span class="tag">Logo Design</span>
+                    <span class="tag">Package Design</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-image">
+                <img src="https://via.placeholder.com/600x400/42A5F5/FFFFFF?text=Book+Design" alt="프로젝트 3">
+            </div>
+            <div class="project-info">
+                <div class="project-number">PROJECT 03</div>
+                <h3>문학 단행본 디자인</h3>
+                <p>
+                    소설의 분위기와 내용을 시각적으로 표현한 북 디자인 프로젝트입니다. 커버부터 내지 레이아웃까지 책의 전체적인 독서 경험을 디자인했습니다.
+                </p>
+                <div class="project-tags">
+                    <span class="tag">Book Design</span>
+                    <span class="tag">Cover Design</span>
+                    <span class="tag">Layout</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-item">
+            <div class="project-image">
+                <img src="https://via.placeholder.com/600x400/E3F2FD/1565C0?text=Exhibition+Design" alt="프로젝트 4">
+            </div>
+            <div class="project-info">
+                <div class="project-number">PROJECT 04</div>
+                <h3>전시회 그래픽 디자인</h3>
+                <p>
+                    현대 미술 전시회의 포스터, 리플렛, 배너 등 전체 홍보물을 디자인했습니다. 전시의 주제를 시각적으로 효과적으로 전달했습니다.
+                </p>
+                <div class="project-tags">
+                    <span class="tag">Poster Design</span>
+                    <span class="tag">Print Design</span>
+                    <span class="tag">Visual Identity</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact 섹션 -->
+    <section class="contact" id="contact">
+        <h2>Let's Work Together</h2>
+        <p>프로젝트 문의나 협업 제안은 언제든 환영합니다.</p>
+        <div class="contact-links">
+            <a href="mailto:parkjinseo@example.com" class="contact-link">📧 Email</a>
+            <a href="https://www.instagram.com" target="_blank" class="contact-link">📷 Instagram</a>
+            <a href="https://www.behance.net" target="_blank" class="contact-link">🎨 Behance</a>
+            <a href="https://www.linkedin.com" target="_blank" class="contact-link">💼 LinkedIn</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 박진서. Powered by <a href="https://ai.triz.kr" target="_blank">AI Portfolio Workshop</a>.</p>
+    </footer>
+
+    <script>
+        // 스크롤 시 네비게이션 하이라이트
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querAll('nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // 프로젝트 이미지 로드 시 애니메이션
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 모든 프로젝트 아이템 관찰
+        document.querySelectorAll('.project-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(item);
+        });
+
+        // 스킬 카드 호버 시 서틀한 애니메이션
+        document.querySelectorAll('.skill-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s ease';
+            });
+        });
+
+        // 네비게이션 스무스 스크롤
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                const offsetTop = targetSection.offsetTop - 70;
+                
+                window.scrollTo({
+                    top: offsetTop,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
